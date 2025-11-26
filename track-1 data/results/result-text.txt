@@ -1,0 +1,78 @@
+✅ Found local model: /kaggle/input/qwen2.5/transformers/14b-instruct/1
+Loading checkpoint shards: 100%
+ 8/8 [02:36<00:00, 17.23s/it]
+Loading data from /kaggle/input/mcp-tools-v1/mcp_dataset_enhanced.json...
+Loaded 1000 tools (Target: 1000)
+Embedding 1000 tools...
+The attention mask is not set and cannot be inferred from input because pad token is same as eos token. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+✅ Database Ready.
+
+=== 🚀 RUNNING COMPARATIVE BENCHMARK (1000 Tools) ===
+
+Processing: Find contact details for 'John Doe'
+   ✅ Semantic: 455 toks | Success: True | enterprise-crm-mcp-server__search_contacts
+   � Keyword : 664 toks | Success: True | enterprise-crm-mcp-server__search_contacts
+
+Processing: Update opportunity 'Big Deal' to stage 'Closed Won'
+   ✅ Semantic: 570 toks | Success: True | enterprise-crm-mcp-server__update_opportunity_stage
+   � Keyword : 603 toks | Success: True | enterprise-crm-mcp-server__update_opportunity_stage
+
+Processing: Get salary history for employee 'Alice Smith'
+   ✅ Semantic: 518 toks | Success: True | hr-management-mcp-server__get_compensation_history
+   � Keyword : 498 toks | Success: True | hr-management-mcp-server__get_compensation_history
+
+Processing: Submit vacation request for next week
+   ✅ Semantic: 653 toks | Success: True | hr-management-mcp-server__submit_time_off_request
+   � Keyword : 728 toks | Success: True | hr-management-mcp-server__submit_time_off_request
+
+Processing: Trigger deployment for 'backend-service' to production
+   ✅ Semantic: 501 toks | Success: True | devops-mcp-server__trigger_pipeline
+   � Keyword : 1098 toks | Success: False | ESP-RainMaker-MCP__get_schedules
+
+Processing: Get logs for build #1234
+   ✅ Semantic: 446 toks | Success: True | devops-mcp-server__get_build_logs
+   � Keyword : 621 toks | Success: True | devops-mcp-server__get_build_logs
+
+Processing: Create a high priority ticket for 'Login Failure'
+   ✅ Semantic: 533 toks | Success: True | customer-support-mcp-server__create_ticket
+   � Keyword : 703 toks | Success: True | jira-mcp-server__create_ticket
+
+Processing: Search knowledge base for 'password reset'
+   ✅ Semantic: 465 toks | Success: True | customer-support-mcp-server__search_articles
+   � Keyword : 551 toks | Success: True | customer-support-mcp-server__search_articles
+
+Processing: Refund charge ch_999999
+   ✅ Semantic: 469 toks | Success: True | payments-mcp-server__create_refund
+   � Keyword : 471 toks | Success: True | payments-mcp-server__create_refund
+
+Processing: Get latest invoice for customer 'Acme Corp'
+   ✅ Semantic: 419 toks | Success: True | stripe-mcp-server__list_invoices
+   � Keyword : 657 toks | Success: True | stripe-mcp-server__list_invoices
+
+Processing: Reset password for user 'bob@example.com'
+   ✅ Semantic: 442 toks | Success: True | identity-mcp-server__reset_password
+   � Keyword : 545 toks | Success: True | identity-mcp-server__reset_password
+
+Processing: Grant 'admin' role to user 'bob'
+   ✅ Semantic: 479 toks | Success: True | identity-mcp-server__assign_role
+   � Keyword : 578 toks | Success: True | identity-mcp-server__assign_role
+
+Processing: List all PDF files in /documents
+   ✅ Semantic: 505 toks | Success: True | file-storage-mcp-server__list_files
+   � Keyword : 687 toks | Success: False | server__list_schemas
+
+Processing: Share 'report.pdf' with 'team@company.com'
+   ✅ Semantic: 576 toks | Success: True | file-storage-mcp-server__share_file
+   � Keyword : 736 toks | Success: True | file-storage-mcp-server__share_file
+
+Processing: Send message to #general channel saying 'Hello'
+   ✅ Semantic: 463 toks | Success: True | slack-mcp-server__post_message
+   � Keyword : 539 toks | Success: True | slack-mcp-server__post_message
+
+📝 Saved results to benchmark_results_enhanced.csv
+
+=== 📊 SUMMARY STATISTICS ===
+Semantic Success Rate: 100.0%
+Keyword Success Rate : 86.7%
+Avg Semantic Tokens  : 499.6
+Avg Keyword Tokens   : 645.3

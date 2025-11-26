@@ -1,0 +1,17 @@
+Loading checkpoint shards: 100%
+ 8/8 [02:13<00:00, 14.70s/it]
+The attention mask is not set and cannot be inferred from input because pad token is same as eos token. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+🚀 Starting Track 2 Benchmark (Verification & Repair)...
+Loading tools from /kaggle/input/mcp-tools-v1/mcp_dataset_enhanced.json...
+Loaded 489 tools.
+Generated 100 test cases.
+
+Running verification pipeline...
+
+=== 📊 EXPERIMENT METRICS ===
+Error Detection Rate: 100.0%
+False Positive Rate: 0.0%
+Repair Success Rate: 100.0%
+✅ Saved plot: track_2_detection_rate.png
+✅ Saved plot: track_2_correctness.png
+📝 Saved results to track_2_results.csv

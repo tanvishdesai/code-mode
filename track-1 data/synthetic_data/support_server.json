@@ -1,0 +1,689 @@
+{
+  "server_name": "customer-support-mcp-server",
+  "file_path": "synthetic/support_server.py",
+  "language": "python",
+  "total_tools": 40,
+  "total_schema_tokens": 1741,
+  "complexity": "medium",
+  "tools": [
+    {
+      "name": "create_ticket",
+      "description": "Creates a new support ticket.",
+      "parameters": {
+        "subject": {
+          "type": "string",
+          "required": true
+        },
+        "description": {
+          "type": "string",
+          "required": true
+        },
+        "requester_email": {
+          "type": "string",
+          "required": true
+        },
+        "priority": {
+          "type": "string",
+          "enum": [
+            "low",
+            "normal",
+            "high",
+            "urgent"
+          ],
+          "default": "normal"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "parameter_count": 5,
+      "estimated_tokens": 88
+    },
+    {
+      "name": "get_ticket",
+      "description": "Retrieves details of a ticket.",
+      "parameters": {
+        "ticket_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 35
+    },
+    {
+      "name": "update_ticket",
+      "description": "Updates ticket properties.",
+      "parameters": {
+        "ticket_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "pending",
+            "solved",
+            "closed"
+          ]
+        },
+        "priority": {
+          "type": "string"
+        },
+        "assignee_id": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 71
+    },
+    {
+      "name": "add_ticket_comment",
+      "description": "Adds a comment to a ticket.",
+      "parameters": {
+        "ticket_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "body": {
+          "type": "string",
+          "required": true
+        },
+        "public": {
+          "type": "boolean",
+          "default": true,
+          "description": "True for public reply, False for internal note"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 76
+    },
+    {
+      "name": "list_ticket_comments",
+      "description": "Lists comments on a ticket.",
+      "parameters": {
+        "ticket_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 37
+    },
+    {
+      "name": "search_tickets",
+      "description": "Searches for tickets using a query string.",
+      "parameters": {
+        "query": {
+          "type": "string",
+          "required": true
+        },
+        "status": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 58
+    },
+    {
+      "name": "delete_ticket",
+      "description": "Permanently deletes a ticket.",
+      "parameters": {
+        "ticket_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 35
+    },
+    {
+      "name": "merge_tickets",
+      "description": "Merges one ticket into another.",
+      "parameters": {
+        "source_ticket_id": {
+          "type": "string",
+          "required": true
+        },
+        "target_ticket_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 40
+    },
+    {
+      "name": "get_ticket_metrics",
+      "description": "Retrieves metrics for a ticket (e.g., reply time).",
+      "parameters": {
+        "ticket_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 42
+    },
+    {
+      "name": "list_tickets_by_user",
+      "description": "Lists tickets requested by a specific user.",
+      "parameters": {
+        "user_id": {
+          "type": "string",
+          "required": true
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 35
+    },
+    {
+      "name": "assign_ticket",
+      "description": "Assigns a ticket to an agent or group.",
+      "parameters": {
+        "ticket_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "assignee_id": {
+          "type": "string"
+        },
+        "group_id": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 54
+    },
+    {
+      "name": "escalate_ticket",
+      "description": "Escalates a ticket to a higher tier.",
+      "parameters": {
+        "ticket_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "reason": {
+          "type": "string",
+          "required": true
+        },
+        "tier": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 61
+    },
+    {
+      "name": "mark_as_spam",
+      "description": "Marks a ticket as spam.",
+      "parameters": {
+        "ticket_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 34
+    },
+    {
+      "name": "restore_ticket",
+      "description": "Restores a deleted ticket.",
+      "parameters": {
+        "ticket_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 35
+    },
+    {
+      "name": "get_ticket_audit_logs",
+      "description": "Retrieves the audit log for a ticket.",
+      "parameters": {
+        "ticket_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 39
+    },
+    {
+      "name": "create_user",
+      "description": "Creates a new end-user or agent.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "email": {
+          "type": "string",
+          "required": true
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "end-user",
+            "agent",
+            "admin"
+          ],
+          "default": "end-user"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 56
+    },
+    {
+      "name": "get_user",
+      "description": "Retrieves user details.",
+      "parameters": {
+        "user_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 32
+    },
+    {
+      "name": "update_user",
+      "description": "Updates user information.",
+      "parameters": {
+        "user_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 55
+    },
+    {
+      "name": "search_users",
+      "description": "Searches for users by name or email.",
+      "parameters": {
+        "query": {
+          "type": "string",
+          "required": true
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 30
+    },
+    {
+      "name": "delete_user",
+      "description": "Deletes a user.",
+      "parameters": {
+        "user_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 31
+    },
+    {
+      "name": "merge_users",
+      "description": "Merges a duplicate user into a primary user.",
+      "parameters": {
+        "source_user_id": {
+          "type": "string",
+          "required": true
+        },
+        "target_user_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 41
+    },
+    {
+      "name": "get_user_identities",
+      "description": "Lists identities (email, phone, etc.) for a user.",
+      "parameters": {
+        "user_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 41
+    },
+    {
+      "name": "suspend_user",
+      "description": "Suspends a user's access.",
+      "parameters": {
+        "user_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 41
+    },
+    {
+      "name": "create_article",
+      "description": "Creates a new knowledge base article.",
+      "parameters": {
+        "title": {
+          "type": "string",
+          "required": true
+        },
+        "body": {
+          "type": "string",
+          "required": true
+        },
+        "section_id": {
+          "type": "string",
+          "required": true
+        },
+        "locale": {
+          "type": "string",
+          "default": "en-us"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 61
+    },
+    {
+      "name": "get_article",
+      "description": "Retrieves an article.",
+      "parameters": {
+        "article_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 33
+    },
+    {
+      "name": "update_article",
+      "description": "Updates an existing article.",
+      "parameters": {
+        "article_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "draft": {
+          "type": "boolean"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 57
+    },
+    {
+      "name": "search_articles",
+      "description": "Searches the knowledge base.",
+      "parameters": {
+        "query": {
+          "type": "string",
+          "required": true
+        },
+        "category_id": {
+          "type": "string"
+        },
+        "locale": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 38
+    },
+    {
+      "name": "delete_article",
+      "description": "Deletes an article.",
+      "parameters": {
+        "article_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 33
+    },
+    {
+      "name": "list_sections",
+      "description": "Lists sections within a category.",
+      "parameters": {
+        "category_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 24
+    },
+    {
+      "name": "list_categories",
+      "description": "Lists help center categories.",
+      "parameters": {
+        "locale": {
+          "type": "string",
+          "default": "en-us"
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 23
+    },
+    {
+      "name": "create_translation",
+      "description": "Creates a translation for an article.",
+      "parameters": {
+        "article_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "locale": {
+          "type": "string",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "required": true
+        },
+        "body": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 74
+    },
+    {
+      "name": "vote_article",
+      "description": "Adds a helpful/not helpful vote to an article.",
+      "parameters": {
+        "article_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "vote": {
+          "type": "string",
+          "enum": [
+            "up",
+            "down"
+          ],
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 57
+    },
+    {
+      "name": "list_article_comments",
+      "description": "Lists comments on an article.",
+      "parameters": {
+        "article_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 38
+    },
+    {
+      "name": "start_chat_session",
+      "description": "Initiates a new chat session.",
+      "parameters": {
+        "visitor_email": {
+          "type": "string",
+          "required": true
+        },
+        "department": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 34
+    },
+    {
+      "name": "send_chat_message",
+      "description": "Sends a message in a chat session.",
+      "parameters": {
+        "session_id": {
+          "type": "string",
+          "required": true
+        },
+        "message": {
+          "type": "string",
+          "required": true
+        },
+        "sender_type": {
+          "type": "string",
+          "enum": [
+            "agent",
+            "visitor"
+          ],
+          "required": true
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 58
+    },
+    {
+      "name": "end_chat_session",
+      "description": "Ends an active chat session.",
+      "parameters": {
+        "session_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 24
+    },
+    {
+      "name": "get_chat_history",
+      "description": "Retrieves the transcript of a chat session.",
+      "parameters": {
+        "session_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 27
+    },
+    {
+      "name": "list_active_chats",
+      "description": "Lists currently active chat sessions.",
+      "parameters": {
+        "department": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 22
+    },
+    {
+      "name": "ban_visitor",
+      "description": "Bans a visitor from chat.",
+      "parameters": {
+        "visitor_id": {
+          "type": "string",
+          "required": true
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 29
+    },
+    {
+      "name": "send_offline_message",
+      "description": "Sends a message to support when no agents are online.",
+      "parameters": {
+        "email": {
+          "type": "string",
+          "required": true
+        },
+        "message": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 42
+    }
+  ]
+}

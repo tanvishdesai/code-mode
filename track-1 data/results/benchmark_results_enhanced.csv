@@ -1,0 +1,16 @@
+Query,Semantic Tokens,Semantic Success,Keyword Tokens,Keyword Success,Naive Tokens,Semantic Tool,Keyword Tool
+Find contact details for 'John Doe',455,True,664,True,150000,enterprise-crm-mcp-server__search_contacts,enterprise-crm-mcp-server__search_contacts
+Update opportunity 'Big Deal' to stage 'Closed Won',570,True,603,True,150000,enterprise-crm-mcp-server__update_opportunity_stage,enterprise-crm-mcp-server__update_opportunity_stage
+Get salary history for employee 'Alice Smith',518,True,498,True,150000,hr-management-mcp-server__get_compensation_history,hr-management-mcp-server__get_compensation_history
+Submit vacation request for next week,653,True,728,True,150000,hr-management-mcp-server__submit_time_off_request,hr-management-mcp-server__submit_time_off_request
+Trigger deployment for 'backend-service' to production,501,True,1098,False,150000,devops-mcp-server__trigger_pipeline,ESP-RainMaker-MCP__get_schedules
+Get logs for build #1234,446,True,621,True,150000,devops-mcp-server__get_build_logs,devops-mcp-server__get_build_logs
+Create a high priority ticket for 'Login Failure',533,True,703,True,150000,customer-support-mcp-server__create_ticket,jira-mcp-server__create_ticket
+Search knowledge base for 'password reset',465,True,551,True,150000,customer-support-mcp-server__search_articles,customer-support-mcp-server__search_articles
+Refund charge ch_999999,469,True,471,True,150000,payments-mcp-server__create_refund,payments-mcp-server__create_refund
+Get latest invoice for customer 'Acme Corp',419,True,657,True,150000,stripe-mcp-server__list_invoices,stripe-mcp-server__list_invoices
+Reset password for user 'bob@example.com',442,True,545,True,150000,identity-mcp-server__reset_password,identity-mcp-server__reset_password
+Grant 'admin' role to user 'bob',479,True,578,True,150000,identity-mcp-server__assign_role,identity-mcp-server__assign_role
+List all PDF files in /documents,505,True,687,False,150000,file-storage-mcp-server__list_files,server__list_schemas
+Share 'report.pdf' with 'team@company.com',576,True,736,True,150000,file-storage-mcp-server__share_file,file-storage-mcp-server__share_file
+Send message to #general channel saying 'Hello',463,True,539,True,150000,slack-mcp-server__post_message,slack-mcp-server__post_message

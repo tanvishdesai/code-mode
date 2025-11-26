@@ -1,7 +1,7 @@
 {
   "dataset_summary": {
-    "total_servers": 11,
-    "total_tools": 74,
+    "total_servers": 16,
+    "total_tools": 94,
     "python_servers": 10,
     "typescript_servers": 1,
     "by_complexity": {
@@ -1605,6 +1605,443 @@
           },
           "parameter_count": 1,
           "estimated_tokens": 30
+        }
+      ]
+    },
+    {
+      "server_name": "stripe-mcp-server",
+      "file_path": "synthetic/stripe.py",
+      "language": "python",
+      "total_tools": 5,
+      "total_schema_tokens": 350,
+      "complexity": "medium",
+      "tools": [
+        {
+          "name": "create_customer",
+          "description": "Create a new customer in Stripe",
+          "parameters": {
+            "email": {
+              "type": "str",
+              "description": "Customer email",
+              "required": true
+            },
+            "name": {
+              "type": "str",
+              "description": "Customer name",
+              "required": false
+            },
+            "payment_method": {
+              "type": "str",
+              "description": "Payment method ID",
+              "required": false
+            }
+          },
+          "parameter_count": 3,
+          "estimated_tokens": 91
+        },
+        {
+          "name": "charge_customer",
+          "description": "Charge a customer",
+          "parameters": {
+            "customer_id": {
+              "type": "str",
+              "description": "Customer ID",
+              "required": true
+            },
+            "amount": {
+              "type": "int",
+              "description": "Amount in cents",
+              "required": true
+            },
+            "currency": {
+              "type": "str",
+              "description": "Currency code (e.g., usd)",
+              "required": true
+            }
+          },
+          "parameter_count": 3,
+          "estimated_tokens": 79
+        },
+        {
+          "name": "list_invoices",
+          "description": "List invoices for a customer",
+          "parameters": {
+            "customer_id": {
+              "type": "str",
+              "description": "Customer ID",
+              "required": true
+            },
+            "limit": {
+              "type": "int",
+              "description": "Number of invoices to return",
+              "required": false,
+              "default": 10
+            }
+          },
+          "parameter_count": 2,
+          "estimated_tokens": 74
+        },
+        {
+          "name": "create_subscription",
+          "description": "Create a new subscription",
+          "parameters": {
+            "customer_id": {
+              "type": "str",
+              "description": "Customer ID",
+              "required": true
+            },
+            "price_id": {
+              "type": "str",
+              "description": "Price ID",
+              "required": true
+            }
+          },
+          "parameter_count": 2,
+          "estimated_tokens": 63
+        },
+        {
+          "name": "cancel_subscription",
+          "description": "Cancel a subscription",
+          "parameters": {
+            "subscription_id": {
+              "type": "str",
+              "description": "Subscription ID",
+              "required": true
+            }
+          },
+          "parameter_count": 1,
+          "estimated_tokens": 43
+        }
+      ]
+    },
+    {
+      "server_name": "slack-mcp-server",
+      "file_path": "synthetic/slack.py",
+      "language": "python",
+      "total_tools": 4,
+      "total_schema_tokens": 218,
+      "complexity": "simple",
+      "tools": [
+        {
+          "name": "post_message",
+          "description": "Post a message to a channel",
+          "parameters": {
+            "channel": {
+              "type": "str",
+              "description": "Channel ID or name",
+              "required": true
+            },
+            "text": {
+              "type": "str",
+              "description": "Message text",
+              "required": true
+            }
+          },
+          "parameter_count": 2,
+          "estimated_tokens": 66
+        },
+        {
+          "name": "list_channels",
+          "description": "List public channels",
+          "parameters": {
+            "limit": {
+              "type": "int",
+              "description": "Limit",
+              "required": false,
+              "default": 20
+            }
+          },
+          "parameter_count": 1,
+          "estimated_tokens": 41
+        },
+        {
+          "name": "get_user_info",
+          "description": "Get information about a user",
+          "parameters": {
+            "user_id": {
+              "type": "str",
+              "description": "User ID",
+              "required": true
+            }
+          },
+          "parameter_count": 1,
+          "estimated_tokens": 46
+        },
+        {
+          "name": "upload_file",
+          "description": "Upload a file to Slack",
+          "parameters": {
+            "channels": {
+              "type": "str",
+              "description": "Comma-separated list of channel IDs",
+              "required": true
+            },
+            "file": {
+              "type": "str",
+              "description": "File path",
+              "required": true
+            }
+          },
+          "parameter_count": 2,
+          "estimated_tokens": 65
+        }
+      ]
+    },
+    {
+      "server_name": "github-mcp-server",
+      "file_path": "synthetic/github.py",
+      "language": "python",
+      "total_tools": 4,
+      "total_schema_tokens": 359,
+      "complexity": "medium",
+      "tools": [
+        {
+          "name": "create_issue",
+          "description": "Create a new issue",
+          "parameters": {
+            "owner": {
+              "type": "str",
+              "description": "Repo owner",
+              "required": true
+            },
+            "repo": {
+              "type": "str",
+              "description": "Repo name",
+              "required": true
+            },
+            "title": {
+              "type": "str",
+              "description": "Issue title",
+              "required": true
+            },
+            "body": {
+              "type": "str",
+              "description": "Issue body",
+              "required": false
+            }
+          },
+          "parameter_count": 4,
+          "estimated_tokens": 90
+        },
+        {
+          "name": "get_pull_request",
+          "description": "Get details of a pull request",
+          "parameters": {
+            "owner": {
+              "type": "str",
+              "description": "Repo owner",
+              "required": true
+            },
+            "repo": {
+              "type": "str",
+              "description": "Repo name",
+              "required": true
+            },
+            "pull_number": {
+              "type": "int",
+              "description": "PR number",
+              "required": true
+            }
+          },
+          "parameter_count": 3,
+          "estimated_tokens": 84
+        },
+        {
+          "name": "list_commits",
+          "description": "List commits on a repository",
+          "parameters": {
+            "owner": {
+              "type": "str",
+              "description": "Repo owner",
+              "required": true
+            },
+            "repo": {
+              "type": "str",
+              "description": "Repo name",
+              "required": true
+            },
+            "sha": {
+              "type": "str",
+              "description": "SHA or branch to start listing from",
+              "required": false
+            }
+          },
+          "parameter_count": 3,
+          "estimated_tokens": 88
+        },
+        {
+          "name": "merge_pull_request",
+          "description": "Merge a pull request",
+          "parameters": {
+            "owner": {
+              "type": "str",
+              "description": "Repo owner",
+              "required": true
+            },
+            "repo": {
+              "type": "str",
+              "description": "Repo name",
+              "required": true
+            },
+            "pull_number": {
+              "type": "int",
+              "description": "PR number",
+              "required": true
+            },
+            "commit_message": {
+              "type": "str",
+              "description": "Commit message",
+              "required": false
+            }
+          },
+          "parameter_count": 4,
+          "estimated_tokens": 97
+        }
+      ]
+    },
+    {
+      "server_name": "jira-mcp-server",
+      "file_path": "synthetic/jira.py",
+      "language": "python",
+      "total_tools": 3,
+      "total_schema_tokens": 248,
+      "complexity": "medium",
+      "tools": [
+        {
+          "name": "create_ticket",
+          "description": "Create a new Jira ticket",
+          "parameters": {
+            "project_key": {
+              "type": "str",
+              "description": "Project Key (e.g. PROJ)",
+              "required": true
+            },
+            "summary": {
+              "type": "str",
+              "description": "Ticket summary",
+              "required": true
+            },
+            "description": {
+              "type": "str",
+              "description": "Ticket description",
+              "required": false
+            },
+            "issuetype": {
+              "type": "str",
+              "description": "Issue type (Bug, Task, etc)",
+              "required": true
+            }
+          },
+          "parameter_count": 4,
+          "estimated_tokens": 112
+        },
+        {
+          "name": "transition_issue",
+          "description": "Change the status of an issue",
+          "parameters": {
+            "issue_key": {
+              "type": "str",
+              "description": "Issue Key (e.g. PROJ-123)",
+              "required": true
+            },
+            "transition_id": {
+              "type": "str",
+              "description": "ID of the transition",
+              "required": true
+            }
+          },
+          "parameter_count": 2,
+          "estimated_tokens": 74
+        },
+        {
+          "name": "add_comment",
+          "description": "Add a comment to an issue",
+          "parameters": {
+            "issue_key": {
+              "type": "str",
+              "description": "Issue Key",
+              "required": true
+            },
+            "body": {
+              "type": "str",
+              "description": "Comment body",
+              "required": true
+            }
+          },
+          "parameter_count": 2,
+          "estimated_tokens": 62
+        }
+      ]
+    },
+    {
+      "server_name": "gdrive-mcp-server",
+      "file_path": "synthetic/gdrive.py",
+      "language": "python",
+      "total_tools": 4,
+      "total_schema_tokens": 204,
+      "complexity": "simple",
+      "tools": [
+        {
+          "name": "list_files",
+          "description": "List files in Google Drive",
+          "parameters": {
+            "query": {
+              "type": "str",
+              "description": "Query string",
+              "required": false
+            },
+            "pageSize": {
+              "type": "int",
+              "description": "Page size",
+              "required": false
+            }
+          },
+          "parameter_count": 2,
+          "estimated_tokens": 64
+        },
+        {
+          "name": "get_file_metadata",
+          "description": "Get metadata for a file",
+          "parameters": {
+            "fileId": {
+              "type": "str",
+              "description": "File ID",
+              "required": true
+            }
+          },
+          "parameter_count": 1,
+          "estimated_tokens": 40
+        },
+        {
+          "name": "download_file",
+          "description": "Download a file's content",
+          "parameters": {
+            "fileId": {
+              "type": "str",
+              "description": "File ID",
+              "required": true
+            }
+          },
+          "parameter_count": 1,
+          "estimated_tokens": 42
+        },
+        {
+          "name": "create_folder",
+          "description": "Create a new folder",
+          "parameters": {
+            "name": {
+              "type": "str",
+              "description": "Folder name",
+              "required": true
+            },
+            "parentId": {
+              "type": "str",
+              "description": "Parent folder ID",
+              "required": false
+            }
+          },
+          "parameter_count": 2,
+          "estimated_tokens": 58
         }
       ]
     }

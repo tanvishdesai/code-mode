@@ -1,0 +1,648 @@
+{
+  "server_name": "analytics-mcp-server",
+  "file_path": "synthetic/analytics_server.py",
+  "language": "python",
+  "total_tools": 40,
+  "total_schema_tokens": 1703,
+  "complexity": "high",
+  "tools": [
+    {
+      "name": "run_sql_query",
+      "description": "Executes a raw SQL query against the data warehouse.",
+      "parameters": {
+        "sql": {
+          "type": "string",
+          "required": true
+        },
+        "limit": {
+          "type": "integer",
+          "default": 100
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "default": 60
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 52
+    },
+    {
+      "name": "get_dataset_preview",
+      "description": "Retrieves a preview of data from a dataset.",
+      "parameters": {
+        "dataset_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        },
+        "rows": {
+          "type": "integer",
+          "default": 10
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 52
+    },
+    {
+      "name": "list_datasets",
+      "description": "Lists available datasets/tables.",
+      "parameters": {
+        "schema": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 43
+    },
+    {
+      "name": "get_dataset_schema",
+      "description": "Retrieves the schema (columns, types) of a dataset.",
+      "parameters": {
+        "dataset_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 43
+    },
+    {
+      "name": "search_data",
+      "description": "Searches for data across datasets using keywords.",
+      "parameters": {
+        "query": {
+          "type": "string",
+          "required": true
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 51
+    },
+    {
+      "name": "explain_query",
+      "description": "Returns the execution plan for a query.",
+      "parameters": {
+        "sql": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 24
+    },
+    {
+      "name": "cancel_query",
+      "description": "Cancels a running query.",
+      "parameters": {
+        "query_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 34
+    },
+    {
+      "name": "get_query_history",
+      "description": "Retrieves a history of executed queries.",
+      "parameters": {
+        "user_id": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 46
+    },
+    {
+      "name": "create_saved_query",
+      "description": "Saves a query for future use.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "sql": {
+          "type": "string",
+          "required": true
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 43
+    },
+    {
+      "name": "get_saved_query",
+      "description": "Retrieves a saved query definition.",
+      "parameters": {
+        "query_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 38
+    },
+    {
+      "name": "create_dashboard",
+      "description": "Creates a new empty dashboard.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "description": {
+          "type": "string"
+        },
+        "folder_id": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 40
+    },
+    {
+      "name": "get_dashboard",
+      "description": "Retrieves dashboard metadata and layout.",
+      "parameters": {
+        "dashboard_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 39
+    },
+    {
+      "name": "add_tile_to_dashboard",
+      "description": "Adds a visualization tile to a dashboard.",
+      "parameters": {
+        "dashboard_id": {
+          "type": "string",
+          "required": true
+        },
+        "visualization_type": {
+          "type": "string",
+          "required": true
+        },
+        "query_id": {
+          "type": "string",
+          "required": true
+        },
+        "layout": {
+          "type": "object"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 64
+    },
+    {
+      "name": "update_dashboard_filter",
+      "description": "Updates global filters on a dashboard.",
+      "parameters": {
+        "dashboard_id": {
+          "type": "string",
+          "required": true
+        },
+        "filters": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 43
+    },
+    {
+      "name": "list_dashboards",
+      "description": "Lists available dashboards.",
+      "parameters": {
+        "folder_id": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 43
+    },
+    {
+      "name": "delete_dashboard",
+      "description": "Deletes a dashboard.",
+      "parameters": {
+        "dashboard_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 35
+    },
+    {
+      "name": "refresh_dashboard",
+      "description": "Triggers a data refresh for a dashboard.",
+      "parameters": {
+        "dashboard_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 40
+    },
+    {
+      "name": "get_dashboard_screenshot",
+      "description": "Generates a screenshot of a dashboard.",
+      "parameters": {
+        "dashboard_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 42
+    },
+    {
+      "name": "duplicate_dashboard",
+      "description": "Creates a copy of a dashboard.",
+      "parameters": {
+        "dashboard_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        },
+        "new_name": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 51
+    },
+    {
+      "name": "pin_dashboard",
+      "description": "Pins a dashboard to the user's home screen.",
+      "parameters": {
+        "dashboard_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 40
+    },
+    {
+      "name": "create_report_schedule",
+      "description": "Schedules a report to be sent via email.",
+      "parameters": {
+        "dashboard_id": {
+          "type": "string",
+          "required": true
+        },
+        "cron_expression": {
+          "type": "string",
+          "required": true
+        },
+        "recipients": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "required": true
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "pdf",
+            "csv",
+            "png"
+          ],
+          "default": "pdf"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 83
+    },
+    {
+      "name": "list_schedules",
+      "description": "Lists active report schedules.",
+      "parameters": {
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 35
+    },
+    {
+      "name": "delete_schedule",
+      "description": "Deletes a report schedule.",
+      "parameters": {
+        "schedule_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 36
+    },
+    {
+      "name": "export_data",
+      "description": "Exports query results to a file.",
+      "parameters": {
+        "query_id": {
+          "type": "string",
+          "required": true
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "csv",
+            "json",
+            "xlsx"
+          ],
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 43
+    },
+    {
+      "name": "get_export_status",
+      "description": "Checks the status of an asynchronous export.",
+      "parameters": {
+        "export_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 41
+    },
+    {
+      "name": "download_export",
+      "description": "Downloads the exported file.",
+      "parameters": {
+        "export_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 36
+    },
+    {
+      "name": "send_report_now",
+      "description": "Triggers an immediate send of a report.",
+      "parameters": {
+        "dashboard_id": {
+          "type": "string",
+          "required": true
+        },
+        "recipients": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 47
+    },
+    {
+      "name": "get_report_history",
+      "description": "Retrieves execution history of a report.",
+      "parameters": {
+        "schedule_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 40
+    },
+    {
+      "name": "create_metric",
+      "description": "Defines a new business metric.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "sql_expression": {
+          "type": "string",
+          "required": true
+        },
+        "format": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 43
+    },
+    {
+      "name": "list_metrics",
+      "description": "Lists defined metrics.",
+      "parameters": {
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 33
+    },
+    {
+      "name": "get_metric_definition",
+      "description": "Retrieves the definition of a metric.",
+      "parameters": {
+        "metric_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 40
+    },
+    {
+      "name": "update_metric",
+      "description": "Updates a metric definition.",
+      "parameters": {
+        "metric_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        },
+        "sql_expression": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 54
+    },
+    {
+      "name": "create_dimension",
+      "description": "Defines a new dimension for slicing data.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "sql_expression": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 39
+    },
+    {
+      "name": "list_dimensions",
+      "description": "Lists defined dimensions.",
+      "parameters": {
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 34
+    },
+    {
+      "name": "validate_model",
+      "description": "Validates the data model for consistency.",
+      "parameters": {
+        "model_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 39
+    },
+    {
+      "name": "grant_access",
+      "description": "Grants access to a dashboard or dataset.",
+      "parameters": {
+        "resource_id": {
+          "type": "string",
+          "required": true
+        },
+        "user_email": {
+          "type": "string",
+          "required": true
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "viewer",
+            "editor",
+            "admin"
+          ],
+          "required": true
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 60
+    },
+    {
+      "name": "revoke_access",
+      "description": "Revokes access to a resource.",
+      "parameters": {
+        "resource_id": {
+          "type": "string",
+          "required": true
+        },
+        "user_email": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 36
+    },
+    {
+      "name": "list_resource_users",
+      "description": "Lists users with access to a resource.",
+      "parameters": {
+        "resource_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 40
+    },
+    {
+      "name": "create_user_group",
+      "description": "Creates a group of users for easier sharing.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 26
+    },
+    {
+      "name": "add_user_to_group",
+      "description": "Adds a user to a group.",
+      "parameters": {
+        "group_id": {
+          "type": "string",
+          "required": true
+        },
+        "user_email": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 35
+    }
+  ]
+}

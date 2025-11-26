@@ -1,0 +1,534 @@
+{
+  "server_name": "file-storage-mcp-server",
+  "file_path": "synthetic/drive_server.py",
+  "language": "python",
+  "total_tools": 30,
+  "total_schema_tokens": 1526,
+  "complexity": "medium",
+  "tools": [
+    {
+      "name": "upload_file",
+      "description": "Uploads a new file.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "parent_id": {
+          "type": "string",
+          "description": "ID of the parent folder"
+        },
+        "content_base64": {
+          "type": "string",
+          "required": true
+        },
+        "mime_type": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 60
+    },
+    {
+      "name": "get_file_metadata",
+      "description": "Retrieves metadata for a file.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 38
+    },
+    {
+      "name": "download_file",
+      "description": "Downloads the content of a file.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        },
+        "format": {
+          "type": "string",
+          "description": "Optional export format (e.g., pdf for docs)"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 61
+    },
+    {
+      "name": "update_file_metadata",
+      "description": "Updates a file's name or description.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "starred": {
+          "type": "boolean"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 64
+    },
+    {
+      "name": "delete_file",
+      "description": "Moves a file to the trash.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 36
+    },
+    {
+      "name": "copy_file",
+      "description": "Creates a copy of a file.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the copy"
+        },
+        "parent_id": {
+          "type": "string",
+          "description": "Destination folder"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 68
+    },
+    {
+      "name": "move_file",
+      "description": "Moves a file to a different folder.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        },
+        "new_parent_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 51
+    },
+    {
+      "name": "list_files",
+      "description": "Lists files in a folder or matching a query.",
+      "parameters": {
+        "query": {
+          "type": "string",
+          "description": "Search query"
+        },
+        "parent_id": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        },
+        "order_by": {
+          "type": "string",
+          "default": "modifiedTime desc"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 77
+    },
+    {
+      "name": "restore_file",
+      "description": "Restores a file from the trash.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 37
+    },
+    {
+      "name": "empty_trash",
+      "description": "Permanently deletes all files in the trash.",
+      "parameters": {},
+      "parameter_count": 0,
+      "estimated_tokens": 14
+    },
+    {
+      "name": "create_folder",
+      "description": "Creates a new folder.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "parent_id": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 28
+    },
+    {
+      "name": "get_folder_metadata",
+      "description": "Retrieves metadata for a folder.",
+      "parameters": {
+        "folder_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 40
+    },
+    {
+      "name": "list_folders",
+      "description": "Lists subfolders within a folder.",
+      "parameters": {
+        "parent_id": {
+          "type": "string",
+          "required": true
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 48
+    },
+    {
+      "name": "move_folder",
+      "description": "Moves a folder to a different location.",
+      "parameters": {
+        "folder_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        },
+        "new_parent_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 53
+    },
+    {
+      "name": "delete_folder",
+      "description": "Moves a folder to the trash.",
+      "parameters": {
+        "folder_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 37
+    },
+    {
+      "name": "share_file",
+      "description": "Shares a file with a user or group.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        },
+        "email": {
+          "type": "string",
+          "required": true
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "reader",
+            "commenter",
+            "writer"
+          ],
+          "required": true
+        },
+        "notify": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 84
+    },
+    {
+      "name": "unshare_file",
+      "description": "Removes a user's access to a file.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        },
+        "permission_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 52
+    },
+    {
+      "name": "list_permissions",
+      "description": "Lists all permissions on a file.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 38
+    },
+    {
+      "name": "update_permission",
+      "description": "Updates a user's role on a file.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        },
+        "permission_id": {
+          "type": "string",
+          "required": true
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "reader",
+            "commenter",
+            "writer"
+          ],
+          "required": true
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 75
+    },
+    {
+      "name": "create_shared_drive",
+      "description": "Creates a new shared drive (team drive).",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 26
+    },
+    {
+      "name": "add_shared_drive_member",
+      "description": "Adds a member to a shared drive.",
+      "parameters": {
+        "drive_id": {
+          "type": "string",
+          "required": true
+        },
+        "email": {
+          "type": "string",
+          "required": true
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "organizer",
+            "fileOrganizer",
+            "writer",
+            "commenter",
+            "reader"
+          ],
+          "required": true
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 67
+    },
+    {
+      "name": "list_shared_drives",
+      "description": "Lists shared drives the user has access to.",
+      "parameters": {
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 40
+    },
+    {
+      "name": "get_share_link",
+      "description": "Generates a shareable link for a file.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        },
+        "access_level": {
+          "type": "string",
+          "enum": [
+            "anyone",
+            "domain",
+            "restricted"
+          ],
+          "default": "restricted"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 66
+    },
+    {
+      "name": "create_comment",
+      "description": "Adds a comment to a file.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        },
+        "content": {
+          "type": "string",
+          "required": true
+        },
+        "anchor": {
+          "type": "string",
+          "description": "JSON string specifying location in file"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 70
+    },
+    {
+      "name": "list_comments",
+      "description": "Lists comments on a file.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 36
+    },
+    {
+      "name": "resolve_comment",
+      "description": "Marks a comment as resolved.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        },
+        "comment_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 50
+    },
+    {
+      "name": "list_revisions",
+      "description": "Lists version history of a file.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 38
+    },
+    {
+      "name": "get_revision",
+      "description": "Retrieves metadata for a specific revision.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        },
+        "revision_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 53
+    },
+    {
+      "name": "update_revision",
+      "description": "Updates revision properties (e.g., keep forever).",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        },
+        "revision_id": {
+          "type": "string",
+          "required": true
+        },
+        "keep_forever": {
+          "type": "boolean",
+          "required": true
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 69
+    },
+    {
+      "name": "delete_revision",
+      "description": "Deletes a specific revision.",
+      "parameters": {
+        "file_id": {
+          "type": "string",
+          "description": "Unique identifier of the file or folder",
+          "required": true
+        },
+        "revision_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 50
+    }
+  ]
+}

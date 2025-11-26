@@ -1,0 +1,949 @@
+{
+  "server_name": "enterprise-crm-mcp-server",
+  "file_path": "synthetic/crm_server.py",
+  "language": "python",
+  "total_tools": 50,
+  "total_schema_tokens": 2784,
+  "complexity": "medium",
+  "tools": [
+    {
+      "name": "create_lead",
+      "description": "Creates a new lead in the CRM system with basic contact information.",
+      "parameters": {
+        "first_name": {
+          "type": "string",
+          "required": true
+        },
+        "last_name": {
+          "type": "string",
+          "required": true
+        },
+        "email": {
+          "type": "string",
+          "required": true
+        },
+        "company": {
+          "type": "string",
+          "required": true
+        },
+        "source": {
+          "type": "string",
+          "description": "Lead source (e.g., Web, Referral)",
+          "default": "Web"
+        }
+      },
+      "parameter_count": 5,
+      "estimated_tokens": 94
+    },
+    {
+      "name": "get_lead",
+      "description": "Retrieves detailed information about a specific lead by ID.",
+      "parameters": {
+        "lead_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 41
+    },
+    {
+      "name": "update_lead_status",
+      "description": "Updates the status of a lead (e.g., New, Contacted, Qualified, Lost).",
+      "parameters": {
+        "lead_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "New",
+            "Contacted",
+            "Qualified",
+            "Unqualified"
+          ],
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 73
+    },
+    {
+      "name": "convert_lead",
+      "description": "Converts a qualified lead into a contact, account, and opportunity.",
+      "parameters": {
+        "lead_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "opportunity_name": {
+          "type": "string",
+          "required": true
+        },
+        "owner_id": {
+          "type": "string",
+          "description": "ID of the user who will own the new records"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 82
+    },
+    {
+      "name": "search_leads",
+      "description": "Searches for leads based on criteria like name, company, or email.",
+      "parameters": {
+        "query": {
+          "type": "string",
+          "required": true
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 56
+    },
+    {
+      "name": "delete_lead",
+      "description": "Permanently removes a lead record.",
+      "parameters": {
+        "lead_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 36
+    },
+    {
+      "name": "assign_lead",
+      "description": "Assigns a lead to a specific sales representative.",
+      "parameters": {
+        "lead_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "user_id": {
+          "type": "string",
+          "required": true,
+          "description": "ID of the sales rep"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 61
+    },
+    {
+      "name": "get_lead_history",
+      "description": "Retrieves the activity history and changes for a lead.",
+      "parameters": {
+        "lead_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 42
+    },
+    {
+      "name": "merge_leads",
+      "description": "Merges duplicate leads into a single record.",
+      "parameters": {
+        "master_lead_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "duplicate_lead_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 55
+    },
+    {
+      "name": "export_leads",
+      "description": "Exports a list of leads to a CSV file based on a filter.",
+      "parameters": {
+        "filter_id": {
+          "type": "string",
+          "description": "ID of the saved filter view"
+        },
+        "format": {
+          "type": "string",
+          "default": "csv"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 48
+    },
+    {
+      "name": "create_opportunity",
+      "description": "Creates a new sales opportunity.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "account_id": {
+          "type": "string",
+          "required": true
+        },
+        "close_date": {
+          "type": "string",
+          "format": "date",
+          "required": true
+        },
+        "stage": {
+          "type": "string",
+          "required": true
+        },
+        "amount": {
+          "type": "number"
+        }
+      },
+      "parameter_count": 5,
+      "estimated_tokens": 73
+    },
+    {
+      "name": "update_opportunity_stage",
+      "description": "Moves an opportunity to a different stage in the sales pipeline.",
+      "parameters": {
+        "opportunity_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "stage_name": {
+          "type": "string",
+          "required": true
+        },
+        "probability": {
+          "type": "integer",
+          "description": "Win probability percentage"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 81
+    },
+    {
+      "name": "add_opportunity_product",
+      "description": "Adds a product line item to an opportunity.",
+      "parameters": {
+        "opportunity_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "product_id": {
+          "type": "string",
+          "required": true
+        },
+        "quantity": {
+          "type": "integer",
+          "required": true
+        },
+        "price": {
+          "type": "number",
+          "required": true
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 80
+    },
+    {
+      "name": "get_opportunity_products",
+      "description": "Lists all products associated with an opportunity.",
+      "parameters": {
+        "opportunity_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 45
+    },
+    {
+      "name": "list_opportunities",
+      "description": "Lists opportunities, optionally filtered by account or owner.",
+      "parameters": {
+        "account_id": {
+          "type": "string"
+        },
+        "owner_id": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 61
+    },
+    {
+      "name": "get_opportunity_forecast",
+      "description": "Calculates the revenue forecast based on opportunity stages and probabilities.",
+      "parameters": {
+        "quarter": {
+          "type": "string",
+          "description": "e.g., 2024-Q1"
+        },
+        "user_id": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 49
+    },
+    {
+      "name": "close_opportunity",
+      "description": "Marks an opportunity as Closed Won or Closed Lost.",
+      "parameters": {
+        "opportunity_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "is_won": {
+          "type": "boolean",
+          "required": true
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason for win/loss"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 72
+    },
+    {
+      "name": "share_opportunity",
+      "description": "Grants access to an opportunity to another user or team.",
+      "parameters": {
+        "opportunity_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "user_or_group_id": {
+          "type": "string",
+          "required": true
+        },
+        "access_level": {
+          "type": "string",
+          "enum": [
+            "Read",
+            "Edit"
+          ],
+          "default": "Read"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 79
+    },
+    {
+      "name": "clone_opportunity",
+      "description": "Creates a copy of an existing opportunity.",
+      "parameters": {
+        "opportunity_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "include_products": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 55
+    },
+    {
+      "name": "get_opportunity_timeline",
+      "description": "Retrieves the timeline of stage changes and activities for an opportunity.",
+      "parameters": {
+        "opportunity_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 51
+    },
+    {
+      "name": "create_account",
+      "description": "Registers a new business account.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "industry": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 46
+    },
+    {
+      "name": "get_account_hierarchy",
+      "description": "Retrieves the parent-child relationship hierarchy for an account.",
+      "parameters": {
+        "account_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 47
+    },
+    {
+      "name": "update_account_address",
+      "description": "Updates the billing or shipping address of an account.",
+      "parameters": {
+        "account_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "street": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "postal_code": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "Billing",
+            "Shipping"
+          ],
+          "default": "Billing"
+        }
+      },
+      "parameter_count": 7,
+      "estimated_tokens": 103
+    },
+    {
+      "name": "create_contact",
+      "description": "Adds a new contact person to an account.",
+      "parameters": {
+        "account_id": {
+          "type": "string",
+          "required": true
+        },
+        "first_name": {
+          "type": "string",
+          "required": true
+        },
+        "last_name": {
+          "type": "string",
+          "required": true
+        },
+        "email": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 5,
+      "estimated_tokens": 66
+    },
+    {
+      "name": "search_contacts",
+      "description": "Finds contacts across all accounts.",
+      "parameters": {
+        "query": {
+          "type": "string",
+          "required": true
+        },
+        "email_domain": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 33
+    },
+    {
+      "name": "link_contact_to_opportunity",
+      "description": "Associates a contact with an opportunity as a contact role (e.g., Decision Maker).",
+      "parameters": {
+        "opportunity_id": {
+          "type": "string",
+          "required": true
+        },
+        "contact_id": {
+          "type": "string",
+          "required": true
+        },
+        "role": {
+          "type": "string",
+          "default": "Influencer"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 67
+    },
+    {
+      "name": "get_account_team",
+      "description": "Lists the internal team members working on an account.",
+      "parameters": {
+        "account_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 43
+    },
+    {
+      "name": "add_account_team_member",
+      "description": "Adds a user to the account team.",
+      "parameters": {
+        "account_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "user_id": {
+          "type": "string",
+          "required": true
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 58
+    },
+    {
+      "name": "merge_accounts",
+      "description": "Merges two account records.",
+      "parameters": {
+        "master_account_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "duplicate_account_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 53
+    },
+    {
+      "name": "get_nearby_accounts",
+      "description": "Finds accounts located within a specific radius of a location.",
+      "parameters": {
+        "latitude": {
+          "type": "number",
+          "required": true
+        },
+        "longitude": {
+          "type": "number",
+          "required": true
+        },
+        "radius_km": {
+          "type": "number",
+          "default": 10
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 57
+    },
+    {
+      "name": "log_call",
+      "description": "Logs a phone call activity against a record.",
+      "parameters": {
+        "related_to_id": {
+          "type": "string",
+          "description": "ID of lead, contact, or opportunity",
+          "required": true
+        },
+        "subject": {
+          "type": "string",
+          "default": "Call"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "duration_seconds": {
+          "type": "integer"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 70
+    },
+    {
+      "name": "create_task",
+      "description": "Creates a task or to-do item.",
+      "parameters": {
+        "subject": {
+          "type": "string",
+          "required": true
+        },
+        "due_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "priority": {
+          "type": "string",
+          "enum": [
+            "High",
+            "Normal",
+            "Low"
+          ],
+          "default": "Normal"
+        },
+        "assigned_to": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 65
+    },
+    {
+      "name": "complete_task",
+      "description": "Marks a task as completed.",
+      "parameters": {
+        "task_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 34
+    },
+    {
+      "name": "schedule_meeting",
+      "description": "Schedules a meeting and sends invites.",
+      "parameters": {
+        "subject": {
+          "type": "string",
+          "required": true
+        },
+        "start_time": {
+          "type": "string",
+          "format": "datetime",
+          "required": true
+        },
+        "end_time": {
+          "type": "string",
+          "format": "datetime",
+          "required": true
+        },
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of email addresses"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 88
+    },
+    {
+      "name": "list_my_tasks",
+      "description": "Lists open tasks assigned to the current user.",
+      "parameters": {
+        "status": {
+          "type": "string",
+          "default": "Open"
+        },
+        "overdue_only": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 40
+    },
+    {
+      "name": "log_email",
+      "description": "Logs an email sent outside the system.",
+      "parameters": {
+        "related_to_id": {
+          "type": "string",
+          "required": true
+        },
+        "subject": {
+          "type": "string",
+          "required": true
+        },
+        "body": {
+          "type": "string"
+        },
+        "sent_at": {
+          "type": "string",
+          "format": "datetime"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 58
+    },
+    {
+      "name": "get_activity_timeline",
+      "description": "Gets a consolidated timeline of all calls, emails, and meetings for a record.",
+      "parameters": {
+        "record_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 49
+    },
+    {
+      "name": "create_recurring_task",
+      "description": "Creates a series of recurring tasks.",
+      "parameters": {
+        "subject": {
+          "type": "string",
+          "required": true
+        },
+        "frequency": {
+          "type": "string",
+          "enum": [
+            "Daily",
+            "Weekly",
+            "Monthly"
+          ],
+          "required": true
+        },
+        "end_date": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 61
+    },
+    {
+      "name": "assign_task_queue",
+      "description": "Assigns a task to a queue instead of a specific user.",
+      "parameters": {
+        "task_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "queue_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 54
+    },
+    {
+      "name": "get_overdue_tasks",
+      "description": "Retrieves all overdue tasks for a team.",
+      "parameters": {
+        "team_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 26
+    },
+    {
+      "name": "run_report",
+      "description": "Executes a pre-defined report and returns the data.",
+      "parameters": {
+        "report_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "filters": {
+          "type": "object",
+          "description": "Dynamic filters to apply"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 59
+    },
+    {
+      "name": "list_dashboards",
+      "description": "Lists available dashboards.",
+      "parameters": {
+        "folder_id": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 18
+    },
+    {
+      "name": "get_dashboard_components",
+      "description": "Retrieves the metadata for components on a dashboard.",
+      "parameters": {
+        "dashboard_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 45
+    },
+    {
+      "name": "export_report",
+      "description": "Exports report data to Excel or CSV.",
+      "parameters": {
+        "report_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "csv",
+            "xlsx"
+          ],
+          "default": "csv"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 55
+    },
+    {
+      "name": "subscribe_to_report",
+      "description": "Subscribes a user to receive report updates via email.",
+      "parameters": {
+        "report_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "frequency": {
+          "type": "string",
+          "default": "Weekly"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 57
+    },
+    {
+      "name": "get_users",
+      "description": "Lists active users in the CRM.",
+      "parameters": {
+        "role_id": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 17
+    },
+    {
+      "name": "create_custom_field",
+      "description": "Adds a custom field to a standard object.",
+      "parameters": {
+        "object_name": {
+          "type": "string",
+          "required": true
+        },
+        "field_name": {
+          "type": "string",
+          "required": true
+        },
+        "field_type": {
+          "type": "string",
+          "enum": [
+            "Text",
+            "Number",
+            "Date",
+            "Picklist"
+          ],
+          "required": true
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 66
+    },
+    {
+      "name": "get_system_info",
+      "description": "Retrieves system usage and limit information.",
+      "parameters": {},
+      "parameter_count": 0,
+      "estimated_tokens": 15
+    },
+    {
+      "name": "manage_permission_set",
+      "description": "Assigns or removes a permission set for a user.",
+      "parameters": {
+        "user_id": {
+          "type": "string",
+          "required": true
+        },
+        "permission_set_id": {
+          "type": "string",
+          "required": true
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "assign",
+            "remove"
+          ],
+          "required": true
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 63
+    },
+    {
+      "name": "audit_login_history",
+      "description": "Retrieves login history for security auditing.",
+      "parameters": {
+        "user_id": {
+          "type": "string"
+        },
+        "start_date": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 37
+    }
+  ]
+}

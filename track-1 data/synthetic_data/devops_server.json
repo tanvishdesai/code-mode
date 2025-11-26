@@ -1,0 +1,652 @@
+{
+  "server_name": "devops-mcp-server",
+  "file_path": "synthetic/devops_server.py",
+  "language": "python",
+  "total_tools": 40,
+  "total_schema_tokens": 1706,
+  "complexity": "high",
+  "tools": [
+    {
+      "name": "trigger_pipeline",
+      "description": "Triggers a new pipeline run.",
+      "parameters": {
+        "pipeline_id": {
+          "type": "string",
+          "required": true
+        },
+        "branch": {
+          "type": "string",
+          "default": "main"
+        },
+        "variables": {
+          "type": "object",
+          "description": "Environment variables for the run"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 57
+    },
+    {
+      "name": "get_pipeline_status",
+      "description": "Retrieves the status of a pipeline run.",
+      "parameters": {
+        "run_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 39
+    },
+    {
+      "name": "list_pipelines",
+      "description": "Lists defined pipelines in a project.",
+      "parameters": {
+        "project_id": {
+          "type": "string",
+          "required": true
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 50
+    },
+    {
+      "name": "cancel_pipeline",
+      "description": "Cancels a running pipeline.",
+      "parameters": {
+        "run_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 35
+    },
+    {
+      "name": "get_build_logs",
+      "description": "Retrieves the logs for a specific build job.",
+      "parameters": {
+        "job_id": {
+          "type": "string",
+          "required": true
+        },
+        "offset": {
+          "type": "integer",
+          "default": 0
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 37
+    },
+    {
+      "name": "retry_pipeline",
+      "description": "Retries a failed pipeline run.",
+      "parameters": {
+        "run_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 36
+    },
+    {
+      "name": "create_pipeline_schedule",
+      "description": "Schedules a pipeline to run periodically.",
+      "parameters": {
+        "pipeline_id": {
+          "type": "string",
+          "required": true
+        },
+        "cron_expression": {
+          "type": "string",
+          "required": true
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 52
+    },
+    {
+      "name": "list_pipeline_schedules",
+      "description": "Lists schedules for a pipeline.",
+      "parameters": {
+        "pipeline_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 26
+    },
+    {
+      "name": "delete_pipeline_schedule",
+      "description": "Deletes a pipeline schedule.",
+      "parameters": {
+        "schedule_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 39
+    },
+    {
+      "name": "approve_deployment",
+      "description": "Approves a manual deployment step.",
+      "parameters": {
+        "run_id": {
+          "type": "string",
+          "required": true
+        },
+        "environment": {
+          "type": "string",
+          "description": "Target environment (e.g., production, staging)",
+          "required": true
+        },
+        "comment": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 62
+    },
+    {
+      "name": "get_test_report",
+      "description": "Retrieves test results for a pipeline run.",
+      "parameters": {
+        "run_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 39
+    },
+    {
+      "name": "get_coverage_report",
+      "description": "Retrieves code coverage statistics.",
+      "parameters": {
+        "run_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 38
+    },
+    {
+      "name": "plan_infrastructure",
+      "description": "Generates an execution plan for infrastructure changes.",
+      "parameters": {
+        "stack_id": {
+          "type": "string",
+          "required": true
+        },
+        "template_body": {
+          "type": "string"
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 48
+    },
+    {
+      "name": "apply_infrastructure",
+      "description": "Applies infrastructure changes.",
+      "parameters": {
+        "stack_id": {
+          "type": "string",
+          "required": true
+        },
+        "plan_id": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 33
+    },
+    {
+      "name": "destroy_infrastructure",
+      "description": "Tears down infrastructure resources.",
+      "parameters": {
+        "stack_id": {
+          "type": "string",
+          "required": true
+        },
+        "force": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 39
+    },
+    {
+      "name": "get_stack_status",
+      "description": "Retrieves the current status of an infrastructure stack.",
+      "parameters": {
+        "stack_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 43
+    },
+    {
+      "name": "get_stack_outputs",
+      "description": "Retrieves output values from a stack.",
+      "parameters": {
+        "stack_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 39
+    },
+    {
+      "name": "validate_template",
+      "description": "Validates an IaC template for syntax errors.",
+      "parameters": {
+        "template_body": {
+          "type": "string",
+          "required": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "terraform",
+            "cloudformation"
+          ],
+          "default": "terraform"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 52
+    },
+    {
+      "name": "list_stacks",
+      "description": "Lists all infrastructure stacks.",
+      "parameters": {
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 35
+    },
+    {
+      "name": "drift_detection",
+      "description": "Checks for drift between state and actual infrastructure.",
+      "parameters": {
+        "stack_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 43
+    },
+    {
+      "name": "list_repositories",
+      "description": "Lists artifact repositories.",
+      "parameters": {
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 36
+    },
+    {
+      "name": "list_artifacts",
+      "description": "Lists packages/images in a repository.",
+      "parameters": {
+        "repository_id": {
+          "type": "string",
+          "required": true
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 51
+    },
+    {
+      "name": "get_artifact_metadata",
+      "description": "Retrieves metadata for a specific artifact version.",
+      "parameters": {
+        "repository_id": {
+          "type": "string",
+          "required": true
+        },
+        "artifact_id": {
+          "type": "string",
+          "required": true
+        },
+        "version": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 57
+    },
+    {
+      "name": "delete_artifact_version",
+      "description": "Deletes a specific version of an artifact.",
+      "parameters": {
+        "repository_id": {
+          "type": "string",
+          "required": true
+        },
+        "artifact_id": {
+          "type": "string",
+          "required": true
+        },
+        "version": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 55
+    },
+    {
+      "name": "scan_artifact",
+      "description": "Triggers a security scan on an artifact.",
+      "parameters": {
+        "repository_id": {
+          "type": "string",
+          "required": true
+        },
+        "artifact_id": {
+          "type": "string",
+          "required": true
+        },
+        "version": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 52
+    },
+    {
+      "name": "get_scan_results",
+      "description": "Retrieves results of a security scan.",
+      "parameters": {
+        "scan_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 38
+    },
+    {
+      "name": "get_metric_data",
+      "description": "Retrieves time-series data for a metric.",
+      "parameters": {
+        "metric_name": {
+          "type": "string",
+          "required": true
+        },
+        "start_time": {
+          "type": "string",
+          "format": "datetime",
+          "required": true
+        },
+        "end_time": {
+          "type": "string",
+          "format": "datetime",
+          "required": true
+        },
+        "dimensions": {
+          "type": "object"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 72
+    },
+    {
+      "name": "list_alerts",
+      "description": "Lists active alerts.",
+      "parameters": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "firing",
+            "resolved"
+          ]
+        },
+        "severity": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 31
+    },
+    {
+      "name": "acknowledge_alert",
+      "description": "Acknowledges an alert.",
+      "parameters": {
+        "alert_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        },
+        "user_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 47
+    },
+    {
+      "name": "create_dashboard",
+      "description": "Creates a new monitoring dashboard.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "widgets": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 39
+    },
+    {
+      "name": "query_logs",
+      "description": "Queries log data.",
+      "parameters": {
+        "query": {
+          "type": "string",
+          "required": true
+        },
+        "start_time": {
+          "type": "string",
+          "format": "datetime"
+        },
+        "end_time": {
+          "type": "string",
+          "format": "datetime"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 70
+    },
+    {
+      "name": "create_alert_rule",
+      "description": "Creates a new alerting rule.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "condition": {
+          "type": "string",
+          "required": true
+        },
+        "threshold": {
+          "type": "number",
+          "required": true
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "default": 5
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 62
+    },
+    {
+      "name": "list_services",
+      "description": "Lists monitored services and their health status.",
+      "parameters": {
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 40
+    },
+    {
+      "name": "get_service_health",
+      "description": "Retrieves detailed health information for a service.",
+      "parameters": {
+        "service_id": {
+          "type": "string",
+          "description": "Unique identifier of the resource",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 43
+    },
+    {
+      "name": "get_secret",
+      "description": "Retrieves a secret value.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 28
+    },
+    {
+      "name": "set_secret",
+      "description": "Creates or updates a secret.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "value": {
+          "type": "string",
+          "required": true
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 41
+    },
+    {
+      "name": "list_secrets",
+      "description": "Lists available secrets.",
+      "parameters": {
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 33
+    },
+    {
+      "name": "delete_secret",
+      "description": "Deletes a secret.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 19
+    },
+    {
+      "name": "rotate_secret",
+      "description": "Triggers rotation for a secret.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 22
+    },
+    {
+      "name": "get_secret_metadata",
+      "description": "Retrieves metadata about a secret (not the value).",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 28
+    }
+  ]
+}

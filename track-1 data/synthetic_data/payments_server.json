@@ -1,0 +1,618 @@
+{
+  "server_name": "payments-mcp-server",
+  "file_path": "synthetic/payments_server.py",
+  "language": "python",
+  "total_tools": 35,
+  "total_schema_tokens": 1691,
+  "complexity": "medium",
+  "tools": [
+    {
+      "name": "create_charge",
+      "description": "Creates a new payment charge.",
+      "parameters": {
+        "amount": {
+          "type": "integer",
+          "required": true,
+          "description": "Amount in cents"
+        },
+        "currency": {
+          "type": "string",
+          "default": "usd",
+          "description": "Three-letter ISO currency code"
+        },
+        "source": {
+          "type": "string",
+          "required": true,
+          "description": "Token or payment source ID"
+        },
+        "description": {
+          "type": "string"
+        },
+        "capture": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "parameter_count": 5,
+      "estimated_tokens": 100
+    },
+    {
+      "name": "get_charge",
+      "description": "Retrieves details of a charge.",
+      "parameters": {
+        "charge_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 35
+    },
+    {
+      "name": "update_charge",
+      "description": "Updates a charge (e.g., description, metadata).",
+      "parameters": {
+        "charge_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "description": {
+          "type": "string"
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 57
+    },
+    {
+      "name": "capture_charge",
+      "description": "Captures a previously uncaptured charge.",
+      "parameters": {
+        "charge_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "amount": {
+          "type": "integer",
+          "description": "Amount to capture (if less than authorized)"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 62
+    },
+    {
+      "name": "create_refund",
+      "description": "Refunds a charge.",
+      "parameters": {
+        "charge_id": {
+          "type": "string",
+          "required": true
+        },
+        "amount": {
+          "type": "integer",
+          "description": "Amount to refund (default is full)"
+        },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "duplicate",
+            "fraudulent",
+            "requested_by_customer"
+          ]
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 64
+    },
+    {
+      "name": "get_refund",
+      "description": "Retrieves details of a refund.",
+      "parameters": {
+        "refund_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 35
+    },
+    {
+      "name": "list_charges",
+      "description": "Lists charges filtering by customer or date.",
+      "parameters": {
+        "customer_id": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        },
+        "created_gte": {
+          "type": "integer",
+          "description": "Timestamp"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 63
+    },
+    {
+      "name": "create_payment_intent",
+      "description": "Creates a payment intent for a future payment.",
+      "parameters": {
+        "amount": {
+          "type": "integer",
+          "required": true
+        },
+        "currency": {
+          "type": "string",
+          "default": "usd",
+          "description": "Three-letter ISO currency code"
+        },
+        "payment_method_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 71
+    },
+    {
+      "name": "confirm_payment_intent",
+      "description": "Confirms a payment intent to finalize payment.",
+      "parameters": {
+        "intent_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "payment_method": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 51
+    },
+    {
+      "name": "cancel_payment_intent",
+      "description": "Cancels a payment intent.",
+      "parameters": {
+        "intent_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 36
+    },
+    {
+      "name": "create_customer",
+      "description": "Creates a new customer record.",
+      "parameters": {
+        "email": {
+          "type": "string",
+          "required": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "payment_method": {
+          "type": "string",
+          "description": "ID of default payment method"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 58
+    },
+    {
+      "name": "get_customer",
+      "description": "Retrieves customer details.",
+      "parameters": {
+        "customer_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 35
+    },
+    {
+      "name": "update_customer",
+      "description": "Updates customer information.",
+      "parameters": {
+        "customer_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "email": {
+          "type": "string"
+        },
+        "default_source": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 53
+    },
+    {
+      "name": "delete_customer",
+      "description": "Deletes a customer.",
+      "parameters": {
+        "customer_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 34
+    },
+    {
+      "name": "list_customers",
+      "description": "Lists customers.",
+      "parameters": {
+        "email": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 39
+    },
+    {
+      "name": "attach_payment_method",
+      "description": "Attaches a payment method to a customer.",
+      "parameters": {
+        "payment_method_id": {
+          "type": "string",
+          "required": true
+        },
+        "customer_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 43
+    },
+    {
+      "name": "detach_payment_method",
+      "description": "Detaches a payment method from a customer.",
+      "parameters": {
+        "payment_method_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 43
+    },
+    {
+      "name": "list_payment_methods",
+      "description": "Lists payment methods for a customer.",
+      "parameters": {
+        "customer_id": {
+          "type": "string",
+          "required": true
+        },
+        "type": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 39
+    },
+    {
+      "name": "create_product",
+      "description": "Creates a product for subscription.",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "service",
+            "good"
+          ],
+          "default": "service"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 43
+    },
+    {
+      "name": "create_price",
+      "description": "Creates a price for a product.",
+      "parameters": {
+        "product_id": {
+          "type": "string",
+          "required": true
+        },
+        "unit_amount": {
+          "type": "integer",
+          "required": true
+        },
+        "currency": {
+          "type": "string",
+          "default": "usd",
+          "description": "Three-letter ISO currency code"
+        },
+        "recurring": {
+          "type": "object",
+          "description": "Interval details (e.g., month)"
+        }
+      },
+      "parameter_count": 4,
+      "estimated_tokens": 82
+    },
+    {
+      "name": "create_subscription",
+      "description": "Subscribes a customer to a price.",
+      "parameters": {
+        "customer_id": {
+          "type": "string",
+          "required": true
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "required": true
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 45
+    },
+    {
+      "name": "get_subscription",
+      "description": "Retrieves subscription details.",
+      "parameters": {
+        "subscription_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 38
+    },
+    {
+      "name": "update_subscription",
+      "description": "Updates a subscription (e.g., change plan).",
+      "parameters": {
+        "subscription_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "cancel_at_period_end": {
+          "type": "boolean"
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 67
+    },
+    {
+      "name": "cancel_subscription",
+      "description": "Cancels a subscription.",
+      "parameters": {
+        "subscription_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 37
+    },
+    {
+      "name": "list_subscriptions",
+      "description": "Lists active subscriptions.",
+      "parameters": {
+        "customer_id": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "default": "active"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 57
+    },
+    {
+      "name": "create_coupon",
+      "description": "Creates a discount coupon.",
+      "parameters": {
+        "percent_off": {
+          "type": "number"
+        },
+        "amount_off": {
+          "type": "integer"
+        },
+        "duration": {
+          "type": "string",
+          "enum": [
+            "once",
+            "repeating",
+            "forever"
+          ],
+          "required": true
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 50
+    },
+    {
+      "name": "delete_coupon",
+      "description": "Deletes a coupon.",
+      "parameters": {
+        "coupon_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 32
+    },
+    {
+      "name": "apply_discount",
+      "description": "Applies a discount to a customer or subscription.",
+      "parameters": {
+        "customer_id": {
+          "type": "string"
+        },
+        "subscription_id": {
+          "type": "string"
+        },
+        "coupon_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 47
+    },
+    {
+      "name": "create_invoice",
+      "description": "Creates a draft invoice.",
+      "parameters": {
+        "customer_id": {
+          "type": "string",
+          "required": true
+        },
+        "collection_method": {
+          "type": "string",
+          "default": "charge_automatically"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 41
+    },
+    {
+      "name": "finalize_invoice",
+      "description": "Finalizes a draft invoice.",
+      "parameters": {
+        "invoice_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 36
+    },
+    {
+      "name": "pay_invoice",
+      "description": "Pays an invoice.",
+      "parameters": {
+        "invoice_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        },
+        "payment_method": {
+          "type": "string"
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 41
+    },
+    {
+      "name": "void_invoice",
+      "description": "Voids an invoice.",
+      "parameters": {
+        "invoice_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 32
+    },
+    {
+      "name": "get_invoice",
+      "description": "Retrieves an invoice.",
+      "parameters": {
+        "invoice_id": {
+          "type": "string",
+          "description": "Unique identifier of the record",
+          "required": true
+        }
+      },
+      "parameter_count": 1,
+      "estimated_tokens": 33
+    },
+    {
+      "name": "list_invoices",
+      "description": "Lists invoices.",
+      "parameters": {
+        "customer_id": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 3,
+      "estimated_tokens": 48
+    },
+    {
+      "name": "list_disputes",
+      "description": "Lists disputes filed by cardholders.",
+      "parameters": {
+        "status": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of results to return",
+          "default": 50
+        }
+      },
+      "parameter_count": 2,
+      "estimated_tokens": 44
+    }
+  ]
+}
